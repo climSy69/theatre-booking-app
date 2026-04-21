@@ -97,6 +97,16 @@ export default function Restaurants() {
         router.replace("/login");
     };
 
+    const handleReserve = (restaurant: Restaurant) => {
+        router.push({
+            pathname: "/reservation-form",
+            params: {
+                restaurantId: String(restaurant.id),
+                restaurantName: restaurant.name,
+            },
+        });
+    };
+
     if (loading) {
         return (
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "white" }}>
@@ -147,6 +157,16 @@ export default function Restaurants() {
                             <Text style={{ color: "black", marginTop: 6 }}>
                                 Cuisine: {restaurant.cuisine}
                             </Text>
+                            <TouchableOpacity
+                                onPress={() => handleReserve(restaurant)}
+                                style={{
+                                    backgroundColor: "blue",
+                                    padding: 12,
+                                    marginTop: 12,
+                                }}
+                            >
+                                <Text style={{ color: "white", textAlign: "center" }}>Reserve</Text>
+                            </TouchableOpacity>
                         </View>
                     ))}
                 </ScrollView>
