@@ -69,7 +69,7 @@ export default function Booking() {
             Alert.alert("Success", data?.message || "Booking confirmed successfully", [
                 {
                     text: "OK",
-                    onPress: () => router.replace("/restaurants"),
+                    onPress: () => router.replace("/theatres"),
                 },
             ]);
         } catch (error: any) {

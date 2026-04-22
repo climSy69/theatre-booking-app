@@ -1,16 +1,19 @@
-# Restaurant Booking App
+# Theatre Booking App
 
-A full-stack mobile restaurant booking application built with **React Native (Expo)**, **Node.js**, **Express**, and **MySQL**.
+A full-stack mobile theatre booking application built with **React Native (Expo)**, **Node.js**, **Express**, and **MySQL**.
 
 ## Features
 
-- User Login / Authentication
-- Persistent Login Session (AsyncStorage)
-- Auto Login on App Start
-- Logout Functionality
-- Restaurants List from Backend API
-- Modern Mobile UI
-- Backend REST API
+- JWT login and authentication
+- Session persistence with AsyncStorage
+- Auto login on app start
+- Logout functionality
+- Theatres list from the backend API
+- Shows list by theatre
+- Showtimes list by show
+- Booking flow with guest selection
+- MySQL backend REST API
+- Simple mobile-friendly UI
 
 ## Tech Stack
 
@@ -27,9 +30,9 @@ A full-stack mobile restaurant booking application built with **React Native (Ex
 
 ## Project Structure
 
-restaurant_booking_app/  
-├── frontend/  
-├── backend/
+project-root/
+- frontend/
+- backend/
 
 ## Installation
 
@@ -52,15 +55,17 @@ npx expo start
 ## Screens
 
 - Login Screen
-- Restaurants Screen
+- Theatres Screen
+- Shows Screen
+- Showtimes Screen
+- Booking Screen
 
 ## Future Improvements
 
-- Reservation System
 - Register Page
 - Admin Dashboard
 - Profile Page
-- Search Restaurants
+- Search Theatres and Shows
 - Booking History
 
 ## Author

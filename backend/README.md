@@ -1,1 +1,1 @@
-# restaurant-booking-app
+# theatre-booking-backend

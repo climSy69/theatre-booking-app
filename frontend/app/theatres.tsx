@@ -40,7 +40,7 @@ const loadTheatres = async () => {
     return theatresRequest;
 };
 
-export default function Restaurants() {
+export default function Theatres() {
     const [theatres, setTheatres] = useState<Theatre[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");

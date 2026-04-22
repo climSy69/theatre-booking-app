@@ -100,10 +100,19 @@ const getMyReservations = (req, res) => {
     const user_id = req.user.id;
 
     const query = `
-        SELECT reservations.*, restaurants.name AS restaurant_name
+        SELECT
+            reservations.*,
+            shows.title AS show_title,
+            theatres.name AS theatre_name,
+            showtimes.show_date,
+            showtimes.show_time,
+            showtimes.price
         FROM reservations
-        JOIN restaurants ON reservations.restaurant_id = restaurants.id
+        JOIN showtimes ON reservations.showtime_id = showtimes.showtime_id
+        JOIN shows ON showtimes.show_id = shows.show_id
+        JOIN theatres ON shows.theatre_id = theatres.theatre_id
         WHERE reservations.user_id = ?
+        ORDER BY showtimes.show_date, showtimes.show_time
     `;
 
     db.query(query, [user_id], (err, results) => {
@@ -145,21 +154,28 @@ const updateReservation = (req, res) => {
     const reservation_id = req.params.id;
     const user_id = req.user.id;
 
-    const { reservation_date, guests } = req.body;
+    const { guests } = req.body;
+    const requestedGuests = Number(guests);
 
-    if (!reservation_date || !guests) {
+    if (!guests) {
         return res.status(400).json({
             message: "All fields are required"
         });
     }
 
+    if (!Number.isInteger(requestedGuests) || requestedGuests <= 0) {
+        return res.status(400).json({
+            message: "Invalid booking details"
+        });
+    }
+
     const query = `
         UPDATE reservations
-        SET reservation_date = ?, guests = ?
+        SET guests = ?
         WHERE id = ? AND user_id = ?
     `;
 
-    db.query(query, [reservation_date, guests, reservation_id, user_id], (err, result) => {
+    db.query(query, [requestedGuests, reservation_id, user_id], (err, result) => {
         if (err) {
             return res.status(500).json({ message: "Database error" });
         }

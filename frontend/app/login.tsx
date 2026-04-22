@@ -63,7 +63,7 @@ export default function Login() {
 
                 Alert.alert("Success", "Logged in!");
                 console.log(data);
-                router.push("/restaurants");
+                router.push("/theatres");
             } else {
                 Alert.alert("Error", data?.message || `Login failed with status ${response.status}`);
             }

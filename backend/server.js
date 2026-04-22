@@ -1,10 +1,9 @@
-const express = require("express");
-const cors = require("cors");
-const reservationRoutes = require("./routes/reservationRoutes");
 require("dotenv").config();
 
+const express = require("express");
+const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
-const restaurantRoutes = require("./routes/restaurantRoutes");
+const reservationRoutes = require("./routes/reservationRoutes");
 const theatreRoutes = require("./routes/theatreRoutes");
 const showRoutes = require("./routes/showRoutes");
 const showtimeRoutes = require("./routes/showtimeRoutes");
@@ -15,7 +14,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/theatres", theatreRoutes);
 app.use("/api/shows", showRoutes);
