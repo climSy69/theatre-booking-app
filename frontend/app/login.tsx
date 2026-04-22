@@ -5,6 +5,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const API_URL = "http://192.168.1.226:5000/api/auth/login";
 
+const normalizeToken = (token: unknown) => {
+    if (typeof token !== "string") {
+        return null;
+    }
+
+    return token.replace(/^Bearer\s+/i, "").replace(/^"|"$/g, "").trim();
+};
+
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -41,8 +49,15 @@ export default function Login() {
             }
 
             if (response.ok) {
+                const token = normalizeToken(data?.token);
+
+                if (!token || !data?.user) {
+                    Alert.alert("Error", "Login response did not include a valid session");
+                    return;
+                }
+
                 await AsyncStorage.multiSet([
-                    ["token", data.token],
+                    ["token", token],
                     ["user", JSON.stringify(data.user)],
                 ]);
 
