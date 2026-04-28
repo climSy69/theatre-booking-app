@@ -2,9 +2,8 @@ import { View, Text, TextInput, Alert, TouchableOpacity, ScrollView } from "reac
 import { useState } from "react";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { apiFetch } from "../utils/apiClient";
 import { ui } from "../utils/theme";
-
-const API_URL = "http://192.168.1.226:5000/api/auth/login";
 
 const normalizeToken = (token: unknown) => {
     if (typeof token !== "string") {
@@ -20,14 +19,11 @@ export default function Login() {
 
     const handleLogin = async () => {
         console.log("Login button pressed");
-        console.log("API URL:", API_URL);
+        console.log("API URL:", "/api/auth/login");
 
         try {
-            const response = await fetch(API_URL, {
+            const response = await apiFetch("/api/auth/login", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
                 body: JSON.stringify({
                     email,
                     password,

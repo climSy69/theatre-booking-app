@@ -3,9 +3,8 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { formatDisplayDate, formatPrice, getNumericPrice } from "../utils/formatters";
+import { apiFetch } from "../utils/apiClient";
 import { ui } from "../utils/theme";
-
-const API_URL = "http://192.168.1.226:5000/api/user/reservations";
 
 type Booking = {
     id: number;
@@ -19,14 +18,6 @@ type Booking = {
     theatre_location: string;
 };
 
-const normalizeToken = (token: string | null) => {
-    if (!token) {
-        return null;
-    }
-
-    return token.replace(/^Bearer\s+/i, "").replace(/^"|"$/g, "").trim();
-};
-
 export default function MyBookings() {
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
@@ -38,18 +29,15 @@ export default function MyBookings() {
 
         const fetchBookings = async () => {
             try {
-                const [[, savedToken], [, savedUser]] = await AsyncStorage.multiGet(["token", "user"]);
-                const token = normalizeToken(savedToken);
+                const savedUser = await AsyncStorage.getItem("user");
 
-                if (!token || !savedUser) {
+                if (!savedUser) {
                     router.replace("/login");
                     return;
                 }
 
-                const response = await fetch(API_URL, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                const response = await apiFetch("/api/user/reservations", {
+                    auth: true,
                 });
                 const data = await response.json();
 
@@ -82,20 +70,9 @@ export default function MyBookings() {
         setCancellingId(bookingId);
 
         try {
-            const savedToken = await AsyncStorage.getItem("token");
-            const token = normalizeToken(savedToken);
-
-            if (!token) {
-                Alert.alert("Error", "Session expired. Please log in again.");
-                router.replace("/login");
-                return;
-            }
-
-            const response = await fetch(`${API_URL}/${bookingId}`, {
+            const response = await apiFetch(`/api/user/reservations/${bookingId}`, {
                 method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                auth: true,
             });
             const rawText = await response.text();
             const data = rawText ? JSON.parse(rawText) : null;

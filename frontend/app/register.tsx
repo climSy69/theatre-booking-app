@@ -1,9 +1,8 @@
 import { router } from "expo-router";
 import { useState } from "react";
 import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { apiFetch } from "../utils/apiClient";
 import { ui } from "../utils/theme";
-
-const API_URL = "http://192.168.1.226:5000/api/auth/register";
 
 export default function Register() {
     const [name, setName] = useState("");
@@ -29,11 +28,8 @@ export default function Register() {
         setSubmitting(true);
 
         try {
-            const response = await fetch(API_URL, {
+            const response = await apiFetch("/api/auth/register", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
                 body: JSON.stringify({
                     name: trimmedName,
                     email: trimmedEmail,
