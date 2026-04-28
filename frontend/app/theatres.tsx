@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { apiFetch } from "../utils/apiClient";
 import { ui } from "../utils/theme";
-
-const API_URL = "http://192.168.1.226:5000/api/theatres";
 
 type Theatre = {
     theatre_id?: number;
@@ -22,7 +21,7 @@ const loadTheatres = async () => {
     }
 
     if (!theatresRequest) {
-        theatresRequest = fetch(API_URL)
+        theatresRequest = apiFetch("/api/theatres")
             .then(async (response) => {
                 const data = await response.json();
 

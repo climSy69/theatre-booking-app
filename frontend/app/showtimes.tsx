@@ -3,9 +3,8 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { formatDisplayDate, formatPrice } from "../utils/formatters";
+import { apiFetch } from "../utils/apiClient";
 import { ui } from "../utils/theme";
-
-const API_URL = "http://192.168.1.226:5000/api/showtimes";
 
 type Showtime = {
     showtime_id?: number;
@@ -46,7 +45,7 @@ export default function Showtimes() {
             }
 
             try {
-                const response = await fetch(`${API_URL}?showId=${encodeURIComponent(showId)}`);
+                const response = await apiFetch(`/api/showtimes?showId=${encodeURIComponent(showId)}`);
                 const data = await response.json();
 
                 if (!response.ok) {

@@ -2,9 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { apiFetch } from "../utils/apiClient";
 import { ui } from "../utils/theme";
-
-const API_URL = "http://192.168.1.226:5000/api/shows";
 
 type Show = {
     show_id?: number;
@@ -45,7 +44,7 @@ export default function Shows() {
             }
 
             try {
-                const response = await fetch(`${API_URL}?theatreId=${encodeURIComponent(theatreId)}`);
+                const response = await apiFetch(`/api/shows?theatreId=${encodeURIComponent(theatreId)}`);
                 const data = await response.json();
 
                 if (!response.ok) {
