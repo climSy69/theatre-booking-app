@@ -19,23 +19,6 @@ The project uses a modern mobile frontend built with **Expo + React Native** and
 
 ---
 
-# Screenshots
-
-> Add screenshots here before publishing to GitHub.
-
-Recommended screenshots:
-
-- Login Screen
-- Register Screen
-- Theatre List
-- Show List
-- Showtimes Screen
-- Seat Selection / Booking Screen
-- Booking Confirmation
-- My Bookings Screen
-
----
-
 # Features
 
 ## Authentication
